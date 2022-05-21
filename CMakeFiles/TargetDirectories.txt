@@ -1,3 +1,0 @@
-/Users/danieldsilva/Downloads/SDL2_Basic_Setup-master/out/CMakeFiles/SDL2_Basic_Setup.dir
-/Users/danieldsilva/Downloads/SDL2_Basic_Setup-master/out/CMakeFiles/edit_cache.dir
-/Users/danieldsilva/Downloads/SDL2_Basic_Setup-master/out/CMakeFiles/rebuild_cache.dir
