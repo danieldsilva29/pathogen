@@ -58,35 +58,33 @@ int main () {
         }
 
         mouseY = 1000 - mouseY;
-        int deltaY = player->y - mouseY;
-        int deltaX = mouseX - player->x;
-        float rotation = xatan(deltaY, deltaX); 
-        cout << "MouseX: " << mouseX << " mouseY: " << mouseY << " player->y " << player->y << " player->x " << player->x << " rotation: " << rotation << endl;
-        // app.setRotation(player, DEG(-atan2(deltaX, deltaY)));
+        int deltaY = (player->y - player->h / 2) - mouseY;
+        int deltaX = mouseX - (player->x + player->w / 2);
+        float rotation = xatan(-deltaY, deltaX); 
+        cout << "MouseX: " << mouseX << " mouseY: " << mouseY \ 
+        << " player->y " << (player->y - player->h / 2) << " player->x " << (player->x + player->w / 2) << " rotation: " << rotation << endl;
+        app.setRotation(player, rotation - 90);
 
         switch (pressed_key) {
             case 'w':
-                player->x -= 10 * cos(rotation);
-                player->y -= 10 * sin(rotation); 
+                player->x -= 10 * cos(RAD(rotation));
+                player->y -= 10 * sin(RAD(rotation)); 
                 break;
             case 's':
-                player->x += 10 * cos(rotation);
-                player->y += 10 * sin(rotation);
+                player->x += 10 * cos(RAD(rotation));
+                player->y += 10 * sin(RAD(rotation));
                 break;
-            break;
-            default:
-                continue;
         }
         
-        if (did_click) {
-            auto newProjectile = new SDL_Rect[1];
-            TODO("Set based on rotation");
-            activeProjectiles.push_back({newProjectile, true});
-        }
+        // // if (did_click) {
+        //     auto newProjectile = new SDL_Rect[1];
+        //     TODO("Set based on rotation");
+        //     activeProjectiles.push_back({newProjectile, true});
+        // }
         
-        for (auto i : projectiles) {
-            for (auto enemy : )
-        }
+        // for (auto i : projectiles) {
+        //     for (auto enemy : )
+        // }
         TODO("Add collision detection");
         app.render();
 

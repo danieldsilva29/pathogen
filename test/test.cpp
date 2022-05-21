@@ -4,9 +4,9 @@
 #define RAD(x) (x/(float)180)*(float)M_PIde <math.h>
 using namespace std;
 int main () {
-    float y = -1; 
-    float x = -1;
-    cout << DEG(atan2(y, x)) << endl; // -45
+    float degree = RAD(30);
+    cout << DEG(sin(degree)) << endl; // -45
+    cout << DEG(cos(degree)) << endl; // -45
 
     // y = 1, x = 1, 45 
     // y = 1, x = 0, 
