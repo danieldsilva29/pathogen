@@ -1,0 +1,8 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/danieldsilva/pathogen'
+echo "Compiling"
+c++ -std=c++17 BESDL.cpp gameMain.cpp -I /usr/include/SDL2 -I . -lSDL2 -lSDL2_image -lSDL2_ttf -o main -g
+./main
+rm main
+make: Leaving directory `/Users/danieldsilva/pathogen'
+ 
