@@ -65,7 +65,7 @@ int main () {
             int deltaY = (player->y + player->h / 2) - enemy->y;
             int deltaX = (player->x + player->w / 2) - enemy->x;
             float rotation = xatan(deltaY, deltaX); 
-            
+            app.setRotation()
         }
     
         // Player follow mouse
