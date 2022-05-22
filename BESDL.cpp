@@ -138,8 +138,9 @@ ShapeObject::ShapeObject(SDL_Renderer *rend, string text, string ttf_path, int f
 }
 
 ShapeObject::~ShapeObject() {
-    SDL_DestroyTexture(texture);
+    cout << "Object getting destroyed";
     SDL_FreeSurface(texture_surface);
+    SDL_DestroyTexture(texture);
     if (font != NULL) TTF_CloseFont(font);
 }
 

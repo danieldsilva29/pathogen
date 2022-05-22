@@ -14,20 +14,9 @@ int main(int argc, char *argv[])
 
     // adjust height and width of our image box.
 
-    texture->x = 800;
-    texture->y = 0;
-    texture->w = 200;
-    texture->h = 800;
-
-    texture2->x = 200;
-    texture2->y = 0;
-    texture2->w = 200;
-    texture2->h = 800;
-    
-    text->x = 200;
-    text->y = 500;
-    text->w = 800;
-    text->h = 200;
+    texture->setCoords(800, 0, 200, 800);
+    texture2->setCoords(200, 0, 200, 800);
+    text->setCoords(200, 500, 800, 200);
 
     int rot = 0;
     int close = 0;
@@ -39,26 +28,26 @@ int main(int argc, char *argv[])
             close = true;
         }
         if (pressed_key == 'w') {
-            text->y -= 10; 
+            text->getCoords(COORD_Y) -= 10; 
         }
         if (pressed_key == 'd') {
-            text->x -= 10;
+            text->getCoords(COORD_X) -= 10;
         }
 
         // right boundary
-        if (text->x + text->w > 1000)
-            text->x = 1000 - text->w;
+        if (text->getCoords(COORD_X) + text->getCoords(COORD_WIDTH) > 1000)
+            text->getCoords(COORD_X) = 1000 - text->getCoords(COORD_WIDTH);
         // left boundary
-        if (text->x < 0)
-            text->x = 0;
+        if (text->getCoords(COORD_X) < 0)
+            text->getCoords(COORD_X) = 0;
  
         // bottom boundary
-        if (text->y + text->h > 1000)
-            text->y = 1000 - text->h;
+        if (text->getCoords(COORD_Y) + text->getCoords(COORD_HEIGHT) > 1000)
+            text->getCoords(COORD_Y) = 1000 - text->getCoords(COORD_HEIGHT);
  
         // upper boundary
-        if (text->y < 0)
-            text->y = 0;
+        if (text->getCoords(COORD_Y) < 0)
+            text->getCoords(COORD_Y) = 0;
         
         app.setRotation(text, rot);
         // Render
