@@ -25,29 +25,20 @@ App::App (string name, int width, int height) {
 }
 
 // https://stackoverflow.com/questions/22886500/how-to-render-text-in-sdl2
-ShapeObject *App::addText (string text, string ttf_path, int fontSize, Uint8 colorR, Uint8 colorG, Uint8 colorB) {
-    auto ret =  new ShapeObject(this->rend, text, ttf_path, fontSize, colorR, colorG, colorB);
+shared_ptr<ShapeObject> App::addText (string text, string ttf_path, int fontSize, Uint8 colorR, Uint8 colorG, Uint8 colorB) {
+    auto ret =  make_shared<ShapeObject>(new ShapeObject(this->rend, text, ttf_path, fontSize, colorR, colorG, colorB));
     this->objects.push_back(ret);
     return ret;
 }
 
-ShapeObject *App::addTexture (string path) {
+shared_ptr<ShapeObject> App::addTexture(string path) {
     // creates a surface to load an image into the main memory
-    auto ret = new ShapeObject(this->rend, path);
+    auto ret = make_shared<ShapeObject>(new ShapeObject(this->rend, path));
     this->objects.push_back(ret);
     return ret;
 }
 
-void App::removeObject (ShapeObject *object) {
-    int i = 0;
-    for (auto _object : this->objects) {
-        if (object == _object) {
-            delete object;
-            VECTOR_REMOVE(objects, i);
-        }
-        ++i;
-    }
-}
+
 
 
 tuple<char, int, int, bool, bool> App::getInteraction () {
@@ -76,8 +67,14 @@ tuple<char, int, int, bool, bool> App::getInteraction () {
 
 void App::render() {
     SDL_RenderClear(this->rend);
+    int counter = 0;
     for (auto object : objects) {
-        SDL_RenderCopyEx(rend, object->texture, NULL, object->texture_rectangle, object->rotation, NULL, SDL_FLIP_NONE);
+        if (auto tmp = object.lock()) {
+            SDL_RenderCopyEx(rend, tmp->texture, NULL, tmp->texture_rectangle, tmp->rotation, NULL, SDL_FLIP_NONE);
+            ++counter;
+        } else {
+            VECTOR_REMOVE(objects, counter);
+        };
     }
     SDL_RenderPresent(this->rend);
     SDL_Delay(1000 / (float)60);
@@ -167,7 +164,7 @@ int& ShapeObject::getCoords(CoordField i) {
     }
 }
 
-bool ShapeObject::hasIntersection(ShapeObject *with) {
+bool ShapeObject::hasIntersection(shared_ptr<ShapeObject> with) {
     return SDL_HasIntersection(this->texture_rectangle, with->texture_rectangle) == SDL_TRUE ? true: false;
 }
 

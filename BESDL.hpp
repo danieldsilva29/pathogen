@@ -9,6 +9,8 @@
 #include <iostream>
 #include <vector>
 #include <map> 
+#include <memory>
+
 using namespace std;
 #define GET(obj, x) get<x>(obj)
 
@@ -25,13 +27,13 @@ class ShapeObject {
         SDL_Texture *texture;
         SDL_Rect *texture_rectangle;
         SDL_Surface *texture_surface;
-        TTF_Font *font;
+        TTF_Font *font = NULL;
         friend class App;
     public:
         void setCoords(int x = -1, int y = -1, int w = -1, int h = -1);
         tuple<int&, int&, int&, int&> getCoords();
         int& getCoords(CoordField i);
-        bool hasIntersection(ShapeObject *with);
+        bool hasIntersection(shared_ptr<ShapeObject> with);
         double rotation;
         ShapeObject(SDL_Renderer *rend, string path);
         ShapeObject(SDL_Renderer *rend, string text, string ttf_path, int fontSize = 14, Uint8 colorR=255, Uint8 colorG=255, Uint8 colorB=255);
@@ -41,16 +43,15 @@ class App {
     private: 
         SDL_Window* win;
         SDL_Renderer* rend;
-        vector<ShapeObject*> objects;
+        vector<weak_ptr<ShapeObject>> objects;
     public: 
         int window_width;
         int window_height;
         App (string name = "GAME", int width=1000, int height=1000); 
-        ShapeObject *addTexture (string path); 
-        ShapeObject *addText (string text, string ttf_path, int fontSize=14, Uint8 colorR=255, Uint8 colorG=255, Uint8 colorB=255); 
+        shared_ptr<ShapeObject> addTexture (string path); 
+        shared_ptr<ShapeObject> addText (string text, string ttf_path, int fontSize=14, Uint8 colorR=255, Uint8 colorG=255, Uint8 colorB=255); 
         tuple<char, int, int, bool, bool> getInteraction(); 
         void render();
         void draw();
-        void removeObject(ShapeObject *object);
         ~App();
 };

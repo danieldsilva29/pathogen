@@ -13,7 +13,7 @@ using namespace std;
 #define DEG(x) x*(180/M_PI)
 #define RAD(x) (x/(float)180)*(float)M_PI
 
-vector<tuple<ShapeObject*, bool, float>> activeProjectiles;
+vector<tuple<shared_ptr<ShapeObject>, bool, float>> activeProjectiles;
 
 void shootStuff(App *app, tuple<int, int, int, int> shooter, float rotation, bool isPlayer = false) {
     auto newProjectile = isPlayer ? app->addTexture("bluelaser.png"): app->addTexture("redlaser.png");
@@ -36,7 +36,7 @@ int main () {
     App app = App("Pathogen?????", 800, 800);
 
     // Create a new enemy
-    vector<tuple<ShapeObject*, int>> enemies;
+    vector<tuple<shared_ptr<ShapeObject>, int>> enemies;
     int enemy_size = 10;
     for (int i = 0; i < 10; i++) {
         int direction = rand() % 360;
@@ -118,10 +118,8 @@ int main () {
                     get<1>(enemy) -= 10;
                     if (get<1>(enemy) <= 0) {
                         cout << "[" << clock() << "] Beshan is dog" << endl;
-                        app.removeObject(get<0>(enemy));
                         VECTOR_REMOVE(enemies, enemyCounter);
                     }
-                    app.removeObject(projectile);
                     VECTOR_REMOVE(activeProjectiles, counter);
                     wasCollided = true;
                 }
