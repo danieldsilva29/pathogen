@@ -1,5 +1,6 @@
 #include "BESDL.hpp"
 #include <cstdio>
+#include <ctime>
 #define DEG(x) x*(180/M_PI)
 #define RAD(x) (x/(float)180)*(float)M_PI
 #define TODO(x) cout << "Task for Beshan the dog: " << x << endl
@@ -50,6 +51,7 @@ int main () {
     
     bool close = false;
     vector<tuple<SDL_Rect*, bool>> activeProjectiles;
+    clock_t time = clock();
     while (!close) {
         // Events management
         auto [pressed_key, mouseX, mouseY, did_click, should_close] = app.getInteraction();
@@ -77,16 +79,31 @@ int main () {
                 break;
         }
         
-        // // if (did_click) {
-        //     auto newProjectile = new SDL_Rect[1];
-        //     TODO("Set based on rotation");
-        //     activeProjectiles.push_back({newProjectile, true});
-        // }
+        if (did_click) {
+            auto newProjectile = new SDL_Rect[1];
+            TODO("Set based on rotation");
+            activeProjectiles.push_back({newProjectile, true});
+        }
         
-        // for (auto i : projectiles) {
-        //     for (auto enemy : )
-        // }
-        TODO("Add collision detection");
+        int counter = 0;
+        bool wasCollided = false;
+        for (auto [projectile, ___useless___] : activeProjectiles) {
+            for (auto enemy : enemies) {
+                if (SDL_HasIntersection(projectile, enemy) == SDL_TRUE) { 
+                    TODO("Add damage");
+                    activeProjectiles.remove(counter);
+                    wasCollided = true;
+                }
+            }
+            if (!wasCollided) {
+                float seconds = (clock() - time) / 1000;
+                projectile->x = seconds * 100 * cos(RAD(rotation));
+                projectile->y = seconds * 100 * cos(RAD(rotation));
+                ++counter;
+                wasCollided = false;
+            }
+        }
+        old = clock();
         app.render();
 
     }
