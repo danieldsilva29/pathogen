@@ -39,6 +39,8 @@ shared_ptr<ShapeObject> App::addTexture(string path) {
 }
 
 
+ShapeObject::ShapeObject (ShapeObject* obj) {
+}
 
 
 tuple<char, int, int, bool, bool> App::getInteraction () {

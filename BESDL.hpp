@@ -35,6 +35,7 @@ class ShapeObject {
         int& getCoords(CoordField i);
         bool hasIntersection(shared_ptr<ShapeObject> with);
         double rotation;
+        ShapeObject(ShapeObject* obj);
         ShapeObject(SDL_Renderer *rend, string path);
         ShapeObject(SDL_Renderer *rend, string text, string ttf_path, int fontSize = 14, Uint8 colorR=255, Uint8 colorG=255, Uint8 colorB=255);
         ~ShapeObject();
