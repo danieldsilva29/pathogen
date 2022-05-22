@@ -74,7 +74,7 @@ tuple<char, int, int, bool, bool> App::getInteraction () {
     return {pressed_key, mouseX, mouseY, did_click, should_close};
 }
 
-void App::render () {
+void App::render() {
     SDL_RenderClear(this->rend);
     for (auto object : objects) {
         SDL_RenderCopyEx(rend, object->texture, NULL, object->texture_rectangle, object->rotation, NULL, SDL_FLIP_NONE);
@@ -143,4 +143,37 @@ ShapeObject::~ShapeObject() {
     SDL_DestroyTexture(texture);
     SDL_FreeSurface(texture_surface);
     if (font != NULL) TTF_CloseFont(font);
+}
+
+tuple<int&, int&, int&, int&> ShapeObject::getCoords() {
+    return {
+        getCoords(COORD_X),
+        getCoords(COORD_Y),
+        getCoords(COORD_WIDTH),
+        getCoords(COORD_HEIGHT)
+    };
+}
+
+int& ShapeObject::getCoords(CoordField i) {
+    switch(i) {
+        case COORD_X:
+            return this->texture_rectangle->x;
+        case COORD_Y:
+            return this->texture_rectangle->y;
+        case COORD_WIDTH:
+            return this->texture_rectangle->w;
+        case COORD_HEIGHT:
+            return this->texture_rectangle->h;
+    }
+}
+
+bool ShapeObject::hasIntersection(ShapeObject *with) {
+    return SDL_HasIntersection(this->texture_rectangle, with->texture_rectangle) == SDL_TRUE ? true: false;
+}
+
+void ShapeObject::setCoords(int x, int y, int w, int h) {
+    if (x != -1) this->texture_rectangle->x = x;
+    if (y != -1) this->texture_rectangle->y = y;
+    if (w != -1) this->texture_rectangle->w = w;
+    if (h != -1) this->texture_rectangle->h = h;
 }

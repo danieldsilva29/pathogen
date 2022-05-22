@@ -15,11 +15,10 @@ using namespace std;
 
 vector<tuple<ShapeObject*, bool, float>> activeProjectiles;
 
-void shootStuff(App *app, ShapeObject *shooter, float rotation, bool isPlayer = false) {
+void shootStuff(App *app, tuple<int, int, int, int> shooter, float rotation, bool isPlayer = false) {
     auto newProjectile = isPlayer ? app->addTexture("bluelaser.png"): app->addTexture("redlaser.png");
     newProjectile->rotation = 270-rotation;
-    newProjectile->texture_rectangle->x = shooter->texture_rectangle->x + shooter->texture_rectangle->w / 2;
-    newProjectile->texture_rectangle->y = shooter->texture_rectangle->y + shooter->texture_rectangle->h / 2;
+    newProjectile->setCoords(get<0>(shooter) + get<2>(shooter), get<1>(shooter) + get<3>(shooter));
     activeProjectiles.push_back({newProjectile, isPlayer, rotation});
     cout << "sdf" << endl;
 }
@@ -53,20 +52,14 @@ int main () {
         enemies.push_back({enemy, MAXHEALTH});
         enemy->rotation = 90 - direction;
 
-        enemy->texture_rectangle->x = x;
-        enemy->texture_rectangle->y = y;
-        enemy->texture_rectangle->w = 100;
-        enemy->texture_rectangle->h = 100;
+        enemy->setCoords(x, y, 100, 100);
 
     }
 
     //create player texture
     int velocity_player = 0;
     auto player = app.addTexture("spaceship.png");
-    player->texture_rectangle->x = 500;
-    player->texture_rectangle->y = 500;
-    player->texture_rectangle->w = 100;
-    player->texture_rectangle->h = 200;
+    player->setCoords(500, 500, 100, 200);
     
     bool close = false;
     
@@ -86,34 +79,34 @@ int main () {
         }
         for (auto enemy : enemies) {
             auto rectangle = get<0>(enemy);
-            int deltaY = (player->texture_rectangle->y + player->texture_rectangle->h / 2) - rectangle->texture_rectangle->y;
-            int deltaX = (player->texture_rectangle->x + player->texture_rectangle->w / 2) - rectangle->texture_rectangle->x;
+            int deltaY = (player->getCoords(COORD_Y) + player->getCoords(COORD_HEIGHT) / 2) - rectangle->getCoords(COORD_Y);
+            int deltaX = (player->getCoords(COORD_X) + player->getCoords(COORD_WIDTH) / 2) - rectangle->getCoords(COORD_X);
             float rotation = xatan(deltaY, deltaX); 
             rectangle->rotation = 270 - rotation;
             
             // cout << "Player X:" << player->x + player->w / 2 << " Player X: " << player->y + player->h / 2 << " Rotation: " << rotation << endl;
 
             // enemy move towards player
-            rectangle->texture_rectangle->x += 2 * cos(RAD(rotation)); 
-            rectangle->texture_rectangle->y += 2 * sin(RAD(rotation));
+            rectangle->getCoords(COORD_X) += 2 * cos(RAD(rotation));
+            rectangle->getCoords(COORD_Y) += 2 * sin(RAD(rotation));
         }
     
         // Player follow mouse
-        int deltaY = mouseY - (player->texture_rectangle->y + player->texture_rectangle->h / 2);
-        int deltaX = mouseX - (player->texture_rectangle->x + player->texture_rectangle->w / 2);
+        int deltaY = mouseY - (player->getCoords(COORD_Y) + player->getCoords(COORD_HEIGHT) / 2);
+        int deltaX = mouseX - (player->getCoords(COORD_HEIGHT) + player->getCoords(COORD_HEIGHT) / 2);
         float rotation = xatan(deltaY, deltaX); 
         player->rotation = 270-rotation;
 
         switch (pressed_key) {
             case 'w':
-                player->texture_rectangle->x += 10 * cos(RAD(rotation));
-                player->texture_rectangle->y += 10 * sin(RAD(rotation)); 
+                player->getCoords(COORD_X) += 10 * cos(RAD(rotation));
+                player->getCoords(COORD_Y) += 10 * sin(RAD(rotation)); 
 
                 break;
         }
         
         if (did_click) {
-            shootStuff(&app, player, rotation, true);
+            shootStuff(&app, player->getCoords(), rotation, true);
         }
         
         int counter = 0;
@@ -121,7 +114,7 @@ int main () {
         for (auto &[projectile, ___useless___, rot] : activeProjectiles) {
             for (auto enemy : enemies) {
                 int enemyCounter = 0;
-                if (SDL_HasIntersection(projectile->texture_rectangle, get<0>(enemy)->texture_rectangle) == SDL_TRUE) { 
+                if (projectile->hasIntersection(get<0>(enemy))) { 
                     get<1>(enemy) -= 10;
                     if (get<1>(enemy) <= 0) {
                         cout << "[" << clock() << "] Beshan is dog" << endl;
@@ -136,8 +129,8 @@ int main () {
             }
             if (!wasCollided) {
                 float seconds = (clock() - time) / 1000;
-                projectile->texture_rectangle->x += seconds * SPEED * cos(RAD(rot));
-                projectile->texture_rectangle->y += seconds * SPEED * sin(RAD(rot));
+                projectile->getCoords(COORD_X) += seconds * SPEED * cos(RAD(rot));
+                projectile->getCoords(COORD_Y) += seconds * SPEED * sin(RAD(rot));
                 ++counter;
                 wasCollided = false;
             }

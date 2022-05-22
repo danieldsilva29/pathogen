@@ -10,15 +10,28 @@
 #include <vector>
 #include <map> 
 using namespace std;
+#define GET(obj, x) get<x>(obj)
+
+typedef enum {
+    COORD_X,
+    COORD_Y,
+    COORD_WIDTH,
+    COORD_HEIGHT
+} CoordField;
 
 class ShapeObject {
     private:
         SDL_Renderer *rend;
-    public:
         SDL_Texture *texture;
         SDL_Rect *texture_rectangle;
         SDL_Surface *texture_surface;
         TTF_Font *font;
+        friend class App;
+    public:
+        void setCoords(int x = -1, int y = -1, int w = -1, int h = -1);
+        tuple<int&, int&, int&, int&> getCoords();
+        int& getCoords(CoordField i);
+        bool hasIntersection(ShapeObject *with);
         double rotation;
         ShapeObject(SDL_Renderer *rend, string path);
         ShapeObject(SDL_Renderer *rend, string text, string ttf_path, int fontSize = 14, Uint8 colorR=255, Uint8 colorG=255, Uint8 colorB=255);
