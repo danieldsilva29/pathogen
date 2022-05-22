@@ -43,6 +43,7 @@ int main () {
     }
 
     //create player texture
+    int velocity_player = 0;
     SDL_Rect* player = app.addTexture("spaceship.png");
     player->x = 0;
     player->y = 0;
@@ -58,30 +59,38 @@ int main () {
         if (should_close) {
             close = true;
         }
-
-        int deltaY = mouseY - (player->y + player->h / 2);
-        int deltaX = mouseX - (player->x + player->w / 2);
+    
+        // Enemy follow player
+        for (auto enemy : enemies) {
+            int deltaY = (player->y + player->h / 2) - enemy->y;
+            int deltaX = (player->x + player->w / 2) - enemy->x;
+            float rotation = xatan(deltaY, deltaX); 
+            
+        }
+    
+        // Player follow mouse
+        deltaY = mouseY - (player->y + player->h / 2);
+        deltaX = mouseX - (player->x + player->w / 2);
         float rotation = xatan(deltaY, deltaX); 
-        cout << "MouseX: " << mouseX << " mouseY: " << mouseY \ 
-        << " player X: " <<  (player->x + player->w / 2 ) << " Player Y: " << (player->y + player->h / 2) << " rotation: " << rotation << endl;
         app.setRotation(player, 270 - rotation);
 
         switch (pressed_key) {
             case 'w':
-                player->y -= 10;
-                // player->x -= 10 * cos(RAD(rotation));
-                // player->y -= 10 * sin(RAD(rotation)); 
+                player->x += 10 * cos(RAD(rotation));
+                player->y += 10 * sin(RAD(rotation)); 
+
                 break;
             case 's':
-                player->y += 10;
-                // player->x += 10 * cos(RAD(rotation));
-                // player->y += 10 * sin(RAD(rotation));
+                player->x -= 10 * cos(RAD(rotation));
+                player->y -= 10 * sin(RAD(rotation));
                 break;
         }
         
         if (did_click) {
-            auto newProjectile = new SDL_Rect[1];
-            TODO("Set based on rotation");
+            auto newProjectile = app.addTexture("bluelaser.png");
+            newProjectile->x = player->x + (10 * cos(RAD(rotation)));
+            newProjectile->y = player->y + (10 * sin(RAD(rotation)));
+
             activeProjectiles.push_back({newProjectile, true});
         }
         
@@ -91,19 +100,19 @@ int main () {
             for (auto enemy : enemies) {
                 if (SDL_HasIntersection(projectile, enemy) == SDL_TRUE) { 
                     TODO("Add damage");
-                    activeProjectiles.remove(counter);
+                    activeProjectiles.erase(activeProjectiles.begin() + counter);
                     wasCollided = true;
                 }
             }
             if (!wasCollided) {
                 float seconds = (clock() - time) / 1000;
-                projectile->x = seconds * 100 * cos(RAD(rotation));
-                projectile->y = seconds * 100 * cos(RAD(rotation));
+                projectile->x += seconds * 100 * cos(RAD(rotation));
+                projectile->y += seconds * 100 * sin(RAD(rotation));
                 ++counter;
                 wasCollided = false;
             }
         }
-        old = clock();
+        time = clock(); 
         app.render();
 
     }
