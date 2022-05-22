@@ -1,4 +1,5 @@
 #include "BESDL.hpp"
+#include "Utils.hpp"
 #include <SDL_ttf.h>
 #include <map>
 App::App (string name, int width, int height) {
@@ -72,9 +73,11 @@ void App::removeObject (SDL_Rect *rect) {
     int i = 0;
     for (auto object : this->texture_rectangles) {
         if (rect == object) {
-            this->textures.erase(this->textures.begin() + i);
-            this->texture_surfaces.erase(this->texture_surfaces.begin() + i); 
-            this->texture_rectangles.erase(this->texture_rectangles.begin() + i);
+            SDL_DestroyTexture(this->textures[i]);
+            VECTOR_REMOVE(this->textures, i);
+            SDL_FreeSurface(this->texture_surfaces[i]);
+            VECTOR_REMOVE(this->texture_surfaces, i);
+            VECTOR_REMOVE(this->texture_rectangles, i);
         }
         ++i;
     }

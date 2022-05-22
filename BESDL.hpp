@@ -34,4 +34,3 @@ class App {
         void removeObject(SDL_Rect *rect);
         ~App();
 };
-#include "Vertex.hpp"
