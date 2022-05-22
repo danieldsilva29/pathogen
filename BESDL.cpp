@@ -68,6 +68,18 @@ SDL_Rect* App::addTexture (string path) {
     return dest;
 }
 
+void App::removeObject (SDL_Rect *rect) {
+    int i = 0;
+    for (auto object : this->texture_rectangles) {
+        if (rect == object) {
+            this->textures.erase(this->textures.begin() + i);
+            this->texture_surfaces.erase(this->texture_surfaces.begin() + i); 
+            this->texture_rectangles.erase(this->texture_rectangles.begin() + i);
+        }
+        ++i;
+    }
+}
+
 void App::setRotation(SDL_Rect *rect, double rotation) {
     int counter = 0;
     for (auto _rect: this->texture_rectangles) {

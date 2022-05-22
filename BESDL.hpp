@@ -20,7 +20,6 @@ class App {
         vector<SDL_Surface*> texture_surfaces;
         vector<TTF_Font*> fonts;
         vector<double> texture_rotation;
-        map<SDL_Rect*, tuple<int, int, int, int, float, int>> movementMap;
         void translateMotion();
     public: 
         int window_width;
@@ -32,6 +31,7 @@ class App {
         void render();
         void draw();
         void setRotation(SDL_Rect *rect, double rotation); //THIS ROTATES CLOCKWISE
+        void removeObject(SDL_Rect *rect);
         ~App();
 };
 #include "Vertex.hpp"
