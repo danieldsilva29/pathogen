@@ -85,19 +85,22 @@ int main () {
         }
         
         int counter = 0;
-        
+        bool wasCollided = false;
         for (auto [projectile, ___useless___] : activeProjectiles) {
             for (auto enemy : enemies) {
                 if (SDL_HasIntersection(projectile, enemy) == SDL_TRUE) { 
                     TODO("Add damage");
                     activeProjectiles.remove(counter);
-                    continue;
+                    wasCollided = true;
                 }
             }
-            float seconds = (clock() - time) / 1000;
-            projectile->x = seconds * 100 * cos(RAD(rotation));
-            projectile->y = seconds * 100 * cos(RAD(rotation));
-            ++counter;
+            if (!wasCollided) {
+                float seconds = (clock() - time) / 1000;
+                projectile->x = seconds * 100 * cos(RAD(rotation));
+                projectile->y = seconds * 100 * cos(RAD(rotation));
+                ++counter;
+                wasCollided = false;
+            }
         }
         old = clock();
         app.render();
