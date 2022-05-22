@@ -43,8 +43,8 @@ int main () {
 
     //create player texture
     SDL_Rect* player = app.addTexture("spaceship.png");
-    player->x = 500;
-    player->y = 500;
+    player->x = 0;
+    player->y = 0;
     player->w = 100;
     player->h = 200;
     
@@ -57,22 +57,23 @@ int main () {
             close = true;
         }
 
-        mouseY = 1000 - mouseY;
-        int deltaY = (player->y - player->h / 2) - mouseY;
+        int deltaY = mouseY - (player->y + player->h / 2);
         int deltaX = mouseX - (player->x + player->w / 2);
-        float rotation = xatan(-deltaY, deltaX); 
+        float rotation = xatan(deltaY, deltaX); 
         cout << "MouseX: " << mouseX << " mouseY: " << mouseY \ 
-        << " player->y " << (player->y - player->h / 2) << " player->x " << (player->x + player->w / 2) << " rotation: " << rotation << endl;
-        app.setRotation(player, rotation - 90);
+        << " player X: " <<  (player->x + player->w / 2 ) << " Player Y: " << (player->y + player->h / 2) << " rotation: " << rotation << endl;
+        app.setRotation(player, 270 - rotation);
 
         switch (pressed_key) {
             case 'w':
-                player->x -= 10 * cos(RAD(rotation));
-                player->y -= 10 * sin(RAD(rotation)); 
+                player->y -= 10;
+                // player->x -= 10 * cos(RAD(rotation));
+                // player->y -= 10 * sin(RAD(rotation)); 
                 break;
             case 's':
-                player->x += 10 * cos(RAD(rotation));
-                player->y += 10 * sin(RAD(rotation));
+                player->y += 10;
+                // player->x += 10 * cos(RAD(rotation));
+                // player->y += 10 * sin(RAD(rotation));
                 break;
         }
         
