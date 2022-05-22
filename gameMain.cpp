@@ -23,6 +23,23 @@ void shootStuff(App *app, tuple<int, int, int, int> shooter, float rotation, boo
     cout << "sdf" << endl;
 }
 
+void spawnEnemy(App *app,vector<tuple<shared_ptr<ShapeObject>, int>>& enemies) {
+    int direction = rand() % 360;
+    float range = (rand() % 20000) / (float) 100 + 200;
+
+    float radians = RAD(direction);
+    float x = cos(radians);
+    float y = sin(radians);
+    x = (app->window_width / 2) + range * x;
+    y = (app->window_height / 2) + range * y;
+
+    auto enemy = app->addTexture("enemyship1.png");
+    enemies.push_back({enemy, MAXHEALTH});
+    enemy->rotation = 90 - direction;
+
+    enemy->setCoords(x, y, 100, 100);
+}
+
 float xatan (float y, float x) {
     float degrees = DEG(atan2(y, x)); 
     if (degrees < 0) {
@@ -34,7 +51,7 @@ float xatan (float y, float x) {
 int main () {
     // 1000 by 1000 window
     App app = App("Pathogen?????", 800, 800);
-
+    shared_ptr<ShapeObject> gameOverText;
     // Create a new enemy
     vector<tuple<shared_ptr<ShapeObject>, int>> enemies;
     int enemy_size = 10;
@@ -89,6 +106,12 @@ int main () {
             // enemy move towards player
             rectangle->getCoords(COORD_X) += 2 * cos(RAD(rotation));
             rectangle->getCoords(COORD_Y) += 2 * sin(RAD(rotation));
+
+            if (rectangle->hasIntersection(player)) {
+                enemies = {};
+                activeProjectiles = {};
+                gameOverText = app.addText("GAME OVER", "./font.ttf", 50, 255, 255, 255);
+            }
         }
     
         // Player follow mouse
@@ -119,6 +142,7 @@ int main () {
                     if (get<1>(enemy) <= 0) {
                         cout << "[" << clock() << "] Beshan is dog" << endl;
                         VECTOR_REMOVE(enemies, enemyCounter);
+
                     }
                     VECTOR_REMOVE(activeProjectiles, counter);
                     wasCollided = true;
@@ -132,6 +156,11 @@ int main () {
                 ++counter;
                 wasCollided = false;
             }
+        }
+
+        //Randomly spawn enemies
+        if((rand() % 10) == 9) {
+            spawnEnemy(&app, enemies);
         }
         time = clock();
         app.render();
