@@ -40,6 +40,7 @@ shared_ptr<ShapeObject> App::addTexture(string path) {
 
 
 ShapeObject::ShapeObject (ShapeObject* obj) {
+    
 }
 
 
@@ -109,12 +110,11 @@ ShapeObject::ShapeObject(SDL_Renderer *rend, string path) {
  
     // let us control our image position
     // so that we can move it with our keyboard.
-    auto dest = new SDL_Rect[1];
+    this->texture_rectangle = new SDL_Rect[1];
     
     // connects our texture with dest to control position
-    SDL_QueryTexture(tex, NULL, NULL, &dest->w, &dest->h); // creates a surface to load an image into the main memory
+    SDL_QueryTexture(tex, NULL, NULL, &this->texture_rectangle->w, &this->texture_rectangle->h); // creates a surface to load an image into the main memory
 
-    texture_rectangle = dest;
     texture_surface = surface;
     texture = tex;
     rotation = 0.0;
@@ -131,8 +131,7 @@ ShapeObject::ShapeObject(SDL_Renderer *rend, string text, string ttf_path, int f
     auto surface = TTF_RenderText_Solid(font, text.c_str(), color);
     texture_surface = surface;
 
-    auto texture = SDL_CreateTextureFromSurface(rend, surface);
-    this->texture = texture;
+    this->texture = SDL_CreateTextureFromSurface(rend, surface);
 
     rotation = 0.0;
     texture_rectangle = new SDL_Rect[1];
@@ -174,5 +173,5 @@ void ShapeObject::setCoords(int x, int y, int w, int h) {
     if (x != -1) this->texture_rectangle->x = x;
     if (y != -1) this->texture_rectangle->y = y;
     if (w != -1) this->texture_rectangle->w = w;
-    if (h != -1) this->texture_rectangle->h = h;
+    if (h != -1) this->texture_rectangle->h = h; 
 }

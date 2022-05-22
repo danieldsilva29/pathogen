@@ -25,7 +25,7 @@ class ShapeObject {
     private:
         SDL_Renderer *rend;
         SDL_Texture *texture;
-        SDL_Rect *texture_rectangle;
+        SDL_Rect *texture_rectangle = new SDL_Rect[1]; 
         SDL_Surface *texture_surface;
         TTF_Font *font = NULL;
         friend class App;

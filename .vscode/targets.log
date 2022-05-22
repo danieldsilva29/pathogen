@@ -1,13 +1,12 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
-# GNU Make 3.81
-# Copyright (C) 2006  Free Software Foundation, Inc.
-# This is free software; see the source for copying conditions.
-# There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A
-# PARTICULAR PURPOSE.
+# GNU Make 4.2.1
+# Built for x86_64-pc-linux-gnu
+# Copyright (C) 1988-2016 Free Software Foundation, Inc.
+# License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+# This is free software: you are free to change and redistribute it.
+# There is NO WARRANTY, to the extent permitted by law.
 
-# This program built for i386-apple-darwin11.3.0
-
-# Make data base, printed on Sun May 22 09:30:10 2022
+# Make data base, printed on Sun May 22 10:17:18 2022
 
 # Variables
 
@@ -16,7 +15,10 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # automatic
 ?F = $(notdir $?)
 # environment
- 
+WSLENV = ELECTRON_RUN_AS_NODE/w:WT_SESSION::WT_PROFILE_ID
+# default
+.SHELLFLAGS := -c
+# environment
 VSCODE_LOG_NATIVE = false
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
@@ -25,115 +27,157 @@ VSCODE_LOG_NATIVE = false
 # automatic
 @F = $(notdir $@)
 # makefile
-CURDIR := /Users/dandy/pathogen
+CURDIR := /home/eshaanb/pathogen
 # makefile
 SHELL = /bin/sh
 # environment
-VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
+VSCODE_NLS_CONFIG = {"locale":"en","availableLanguages":{}}
 # environment
-_ = /usr/bin/make
-# makefile (from `Makefile', line 1)
+_ = /mnt/c/Users/eshaa/AppData/Local/Programs/Microsoft VS Code/bin/code
+# makefile (from 'Makefile', line 1)
 MAKEFILE_LIST :=  Makefile
+# 'override' directive
+GNUMAKEFLAGS := 
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/_n/wsm8lpg93fl_tqgbb3pd6r5r0000gp/T/vscode-ipc-91f5aa95-acc5-43ef-a210-0ed38d1fb057.sock
+VSCODE_CWD = /mnt/c/Users/eshaa/AppData/Local/Programs/Microsoft VS Code
+# default
+MAKE_HOST := x86_64-pc-linux-gnu
 # environment
-VSCODE_CWD = /
+PATH = /home/eshaanb/.vscode-server/bin/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5/bin/remote-cli:/home/eshaanb/anaconda3/bin:/home/eshaanb/anaconda3/condabin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/ProgramData/Oracle/Java/javapath:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0:/mnt/c/WINDOWS/System32/OpenSSH:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0:/mnt/c/WINDOWS/System32/OpenSSH:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/ProgramData/DockerDesktop/version-bin:/mnt/c/Users/eshaa/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/eshaa/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/eshaa/Downloads/bootstrapper:/mnt/c/Program Files/VideoLAN/VLC:/mnt/c/Users/eshaa/AppData/Local/atom/bin:/mnt/c/Users/eshaa/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/eshaa/AppData/Local/Programs/Microsoft VS Code/bin
 # environment
-PATH = /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/Users/dandy/.cargo/bin
+LSCOLORS = Gxfxcxdxbxegedabagacad
+# environment
+XDG_RUNTIME_DIR = /mnt/wslg/runtime-dir
+# environment
+CONDA_PREFIX = /home/eshaanb/anaconda3
 # environment
 VSCODE_LOG_STACK = false
 # environment
-ELECTRON_RUN_AS_NODE = 1
+VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-a393d92b-378d-4f94-a3ae-7e309cb3ac6b.sock
 # default
-.FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
+.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.hA0NOUgpW6/Listeners
+LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
 # automatic
 %F = $(notdir $%)
 # environment
+DISPLAY = :0
+# environment
+CONDA_EXE = /home/eshaanb/anaconda3/bin/conda
+# environment
 VSCODE_PIPE_LOGGING = true
 # environment
-PWD = /Users/dandy/pathogen
+PWD = /home/eshaanb/pathogen
+# default
+.LOADED := 
 # environment
-ORIGINAL_XDG_CURRENT_DESKTOP = undefined
+WSL_INTEROP = /run/WSL/1078_interop
+# environment
+PULSE_SERVER = /mnt/wslg/PulseServer
+# environment
+WT_SESSION = cfba28a4-73e2-4670-a0f4-08cd14f87cb0
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
-HOME = /Users/dandy
-# default
-MAKEFILEPATH = $(shell /usr/bin/xcode-select -print-path 2>/dev/null || echo /Developer)/Makefiles
+HOME = /home/eshaanb
 # environment
-VSCODE_CODE_CACHE_PATH = /Users/dandy/Library/Application Support/Code/CachedData/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5
+LOGNAME = eshaanb
 # environment
-LOGNAME = dandy
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+CONDA_PROMPT_MODIFIER = (base) 
+# environment
+ZSH = /home/eshaanb/.oh-my-zsh
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # automatic
 ^D = $(patsubst %/,%,$(dir $^))
 # environment
-XPC_FLAGS = 0x0
+MAKELEVEL := 0
+# environment
+CONDA_DEFAULT_ENV = base
 # default
 MAKE = $(MAKE_COMMAND)
 # default
 MAKECMDGOALS := all
 # environment
+CONDA_SHLVL = 1
+# environment
 SHLVL = 1
 # default
-MAKE_VERSION := 3.81
+MAKE_VERSION := 4.2.1
 # environment
-USER = dandy
+USER = eshaanb
 # makefile
 .DEFAULT_GOAL := all
+# environment
+NAME = Code
+# environment
+LESS = -R
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
+# environment
+VSCODE_WSL_EXT_LOCATION = /mnt/c/Users/eshaa/.vscode/extensions/ms-vscode-remote.remote-wsl-0.66.3
 # default
-MAKE_COMMAND := /Library/Developer/CommandLineTools/usr/bin/make
+MAKE_COMMAND := make
+# environment
+OLDPWD = /mnt/c/Users/eshaa/AppData/Local/Programs/Microsoft VS Code
 # default
 .VARIABLES := 
-# environment
-TMPDIR = /var/folders/_n/wsm8lpg93fl_tqgbb3pd6r5r0000gp/T/
 # automatic
 *F = $(notdir $*)
-# environment
-VSCODE_IPC_HOOK = /Users/dandy/Library/Application Support/Code/1.67.2-main.sock
 # makefile
-MAKEFLAGS = Rrqp
+MAKEFLAGS = pqrR
 # environment
-MFLAGS = -Rrqp
+MFLAGS = -pqrR
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
-# environment
-XPC_SERVICE_NAME = com.microsoft.VSCode.17916
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
 +F = $(notdir $+)
 # environment
-__CF_USER_TEXT_ENCODING = 0x1F6:0x0:0x0
+VSCODE_HANDLES_SIGPIPE = true
+# environment
+WT_PROFILE_ID = {2c4de342-38b7-51cf-b940-2309a097f518}
 # default
 MAKEFILES := 
 # automatic
 <F = $(notdir $<)
 # environment
+PAGER = less
+# environment
 LC_ALL = C
+# environment
+CONDA_PYTHON_EXE = /home/eshaanb/anaconda3/bin/python
+# environment
+HOSTTYPE = x86_64
 # automatic
 ^F = $(notdir $^)
 # default
 SUFFIXES := 
-# default
-.INCLUDE_DIRS = /usr/local/include
 # environment
-MAKELEVEL := 0
+WAYLAND_DISPLAY = wayland-0
+# environment
+_CE_M = 
+# default
+.INCLUDE_DIRS = /usr/include /usr/local/include /usr/include
+# default
+.RECIPEPREFIX := 
 # environment
 LANG = C
 # environment
-VSCODE_PID = 99787
+TERM = xterm-256color
+# environment
+VSCODE_EXTHOST_WILL_SEND_SOCKET = true
+# environment
+WSL_DISTRO_NAME = Ubuntu
+# environment
+_CE_CONDA = 
 # variable set hash-table stats:
-# Load=60/1024=6%, Rehash=0, Collisions=1/86=1%
+# Load=83/1024=8%, Rehash=0, Collisions=6/111=5%
 
 # Pattern-specific Variable Values
 
@@ -141,9 +185,9 @@ VSCODE_PID = 99787
 
 # Directories
 
-# . (device 16777221, inode 31436164): 21 files, no impossibilities.
+# . (device 2096, inode 56216): 20 files, no impossibilities.
 
-# 21 files, no impossibilities in 1 directories.
+# 20 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -152,9 +196,9 @@ VSCODE_PID = 99787
 # Files
 
 all:
-#  Command-line target.
+#  Command line target.
 #  Implicit rule search has not been done.
-#  Implicit/static pattern stem: `'
+#  Implicit/static pattern stem: ''
 #  File does not exist.
 #  File has been updated.
 #  Needs to be updated (-q is set).
@@ -175,13 +219,12 @@ all:
 # automatic
 # ? := 
 # variable set hash-table stats:
-# Load=8/32=25%, Rehash=0, Collisions=1/10=10%
-#  commands to execute (from `Makefile', line 2):
+# Load=8/32=25%, Rehash=0, Collisions=1/11=9%
+#  recipe to execute (from 'Makefile', line 2):
 	@echo "Compiling"
 	@c++ -std=c++17 BESDL.cpp gameMain.cpp -I /usr/local/Cellar/sdl2/2.0.22/include -I . -lSDL2 -lSDL2_image -lSDL2_ttf -o main -g
 	@./main
 	@rm main
-	
 
 # Not a target:
 .SUFFIXES:
@@ -192,11 +235,9 @@ all:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-21 22:17:30
+#  Last modified 2022-05-22 10:08:24.777599
 #  File has been updated.
 #  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 # Not a target:
 .DEFAULT:
@@ -208,26 +249,26 @@ beshan:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 8):
+#  recipe to execute (from 'Makefile', line 8):
 	@echo "Compiling"
 	@c++ -std=c++17 BESDL.cpp test/main.cpp -I /usr/local/Cellar/sdl2/2.0.22/include -I . -lSDL2 -lSDL2_image -lSDL2_ttf -o main
 	@./main
 	@rm main
-	
 
 # files hash-table stats:
-# Load=5/1024=0%, Rehash=0, Collisions=0/19=0%
+# Load=5/1024=0%, Rehash=0, Collisions=0/17=0%
 # VPATH Search Paths
 
-# No `vpath' search paths.
+# No 'vpath' search paths.
 
-# No general (`VPATH' variable) search path.
+# No general ('VPATH' variable) search path.
 
-# # of strings in strcache: 1
-# # of strcache buffers: 1
-# strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
-# strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
+# strcache buffers: 1 (0) / strings = 26 / storage = 266 B / avg = 10 B
+# current buf: size = 8162 B / used = 266 B / count = 26 / avg = 10 B
 
-# Finished Make data base on Sun May 22 09:30:10 2022
+# strcache performance: lookups = 34 / hit rate = 23%
+# hash-table stats:
+# Load=26/8192=0%, Rehash=0, Collisions=1/34=3%
+# Finished Make data base on Sun May 22 10:17:18 2022
 
  
