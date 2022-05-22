@@ -11,26 +11,33 @@
 #include <map> 
 using namespace std;
 
+class ShapeObject {
+    private:
+        SDL_Renderer *rend;
+    public:
+        SDL_Texture *texture;
+        SDL_Rect *texture_rectangle;
+        SDL_Surface *texture_surface;
+        TTF_Font *font;
+        double rotation;
+        ShapeObject(SDL_Renderer *rend, string path);
+        ShapeObject(SDL_Renderer *rend, string text, string ttf_path, int fontSize = 14, Uint8 colorR=255, Uint8 colorG=255, Uint8 colorB=255);
+        ~ShapeObject();
+};
 class App {
     private: 
         SDL_Window* win;
         SDL_Renderer* rend;
-        vector<SDL_Texture*> textures;
-        vector<SDL_Rect*> texture_rectangles;
-        vector<SDL_Surface*> texture_surfaces;
-        vector<TTF_Font*> fonts;
-        vector<double> texture_rotation;
-        void translateMotion();
+        vector<ShapeObject*> objects;
     public: 
         int window_width;
         int window_height;
         App (string name = "GAME", int width=1000, int height=1000); 
-        SDL_Rect* addTexture (string path); 
-        SDL_Rect* addText (string text, string ttf_path, int fontSize=14, Uint8 colorR=255, Uint8 colorG=255, Uint8 colorB=255); 
+        ShapeObject *addTexture (string path); 
+        ShapeObject *addText (string text, string ttf_path, int fontSize=14, Uint8 colorR=255, Uint8 colorG=255, Uint8 colorB=255); 
         tuple<char, int, int, bool, bool> getInteraction(); 
         void render();
         void draw();
-        void setRotation(SDL_Rect *rect, double rotation); //THIS ROTATES CLOCKWISE
-        void removeObject(SDL_Rect *rect);
+        void removeObject(ShapeObject *object);
         ~App();
 };

@@ -3,6 +3,7 @@
 #include <ctime>
 #include <vector>
 #include "Utils.hpp"
+
 using namespace std;
 
 #define SPEED 10 //Speed of projectiles per second
@@ -12,13 +13,13 @@ using namespace std;
 #define DEG(x) x*(180/M_PI)
 #define RAD(x) (x/(float)180)*(float)M_PI
 
-vector<tuple<SDL_Rect*, bool, float>> activeProjectiles;
+vector<tuple<ShapeObject*, bool, float>> activeProjectiles;
 
-void shootStuff(App *app, SDL_Rect *shooter, float rotation, bool isPlayer = false) {
+void shootStuff(App *app, ShapeObject *shooter, float rotation, bool isPlayer = false) {
     auto newProjectile = isPlayer ? app->addTexture("bluelaser.png"): app->addTexture("redlaser.png");
-    app->setRotation(newProjectile, 270 - rotation);
-    newProjectile->x = shooter->x + shooter->w / 2;
-    newProjectile->y = shooter->y + shooter->h / 2;
+    newProjectile->rotation = 270-rotation;
+    newProjectile->texture_rectangle->x = shooter->texture_rectangle->x + shooter->texture_rectangle->w / 2;
+    newProjectile->texture_rectangle->y = shooter->texture_rectangle->y + shooter->texture_rectangle->h / 2;
     activeProjectiles.push_back({newProjectile, isPlayer, rotation});
     cout << "sdf" << endl;
 }
@@ -33,10 +34,10 @@ float xatan (float y, float x) {
 
 int main () {
     // 1000 by 1000 window
-    App app = App("Pathogen?????");
+    App app = App("Pathogen?????", 800, 800);
 
     // Create a new enemy
-    vector<tuple<SDL_Rect*, int>> enemies;
+    vector<tuple<ShapeObject*, int>> enemies;
     int enemy_size = 10;
     for (int i = 0; i < 10; i++) {
         int direction = rand() % 360;
@@ -48,28 +49,29 @@ int main () {
         x = (app.window_width / 2) + range * x;
         y = (app.window_height / 2) + range * y;
 
-        SDL_Rect* enemy = app.addTexture("enemyship1.png");
+        auto enemy = app.addTexture("enemyship1.png");
         enemies.push_back({enemy, MAXHEALTH});
-        app.setRotation(enemy, 90 - direction);
+        enemy->rotation = 90 - direction;
 
-        enemy->x = x;
-        enemy->y = y;
-        enemy->w = 100;
-        enemy->h = 100;
+        enemy->texture_rectangle->x = x;
+        enemy->texture_rectangle->y = y;
+        enemy->texture_rectangle->w = 100;
+        enemy->texture_rectangle->h = 100;
 
     }
 
     //create player texture
     int velocity_player = 0;
-    SDL_Rect* player = app.addTexture("spaceship.png");
-    player->x = 500;
-    player->y = 500;
-    player->w = 100;
-    player->h = 200;
+    auto player = app.addTexture("spaceship.png");
+    player->texture_rectangle->x = 500;
+    player->texture_rectangle->y = 500;
+    player->texture_rectangle->w = 100;
+    player->texture_rectangle->h = 200;
     
     bool close = false;
     
     clock_t time = clock();
+ 
     while (!close) {
         // Events management
         auto [pressed_key, mouseX, mouseY, did_click, should_close] = app.getInteraction();
@@ -83,29 +85,29 @@ int main () {
             cout << "enemy size: " << enemies.size() << endl;
         }
         for (auto enemy : enemies) {
-            SDL_Rect* rectangle = get<0>(enemy);
-            int deltaY = (player->y + player->h / 2) - rectangle->y;
-            int deltaX = (player->x + player->w / 2) - rectangle->x;
+            auto rectangle = get<0>(enemy);
+            int deltaY = (player->texture_rectangle->y + player->texture_rectangle->h / 2) - rectangle->texture_rectangle->y;
+            int deltaX = (player->texture_rectangle->x + player->texture_rectangle->w / 2) - rectangle->texture_rectangle->x;
             float rotation = xatan(deltaY, deltaX); 
-            app.setRotation(rectangle, 270 - rotation);
+            rectangle->rotation = 270 - rotation;
             
             // cout << "Player X:" << player->x + player->w / 2 << " Player X: " << player->y + player->h / 2 << " Rotation: " << rotation << endl;
 
             // enemy move towards player
-            rectangle->x += 2 * cos(RAD(rotation)); 
-            rectangle->y += 2 * sin(RAD(rotation));
+            rectangle->texture_rectangle->x += 2 * cos(RAD(rotation)); 
+            rectangle->texture_rectangle->y += 2 * sin(RAD(rotation));
         }
     
         // Player follow mouse
-        int deltaY = mouseY - (player->y + player->h / 2);
-        int deltaX = mouseX - (player->x + player->w / 2);
+        int deltaY = mouseY - (player->texture_rectangle->y + player->texture_rectangle->h / 2);
+        int deltaX = mouseX - (player->texture_rectangle->x + player->texture_rectangle->w / 2);
         float rotation = xatan(deltaY, deltaX); 
-        app.setRotation(player, 270 - rotation);
+        player->rotation = 270-rotation;
 
         switch (pressed_key) {
             case 'w':
-                player->x += 10 * cos(RAD(rotation));
-                player->y += 10 * sin(RAD(rotation)); 
+                player->texture_rectangle->x += 10 * cos(RAD(rotation));
+                player->texture_rectangle->y += 10 * sin(RAD(rotation)); 
 
                 break;
         }
@@ -119,10 +121,10 @@ int main () {
         for (auto &[projectile, ___useless___, rot] : activeProjectiles) {
             for (auto enemy : enemies) {
                 int enemyCounter = 0;
-                if (SDL_HasIntersection(projectile, get<0>(enemy)) == SDL_TRUE) { 
+                if (SDL_HasIntersection(projectile->texture_rectangle, get<0>(enemy)->texture_rectangle) == SDL_TRUE) { 
                     get<1>(enemy) -= 10;
                     if (get<1>(enemy) <= 0) {
-                        cout << "Beshan is dog" << endl;
+                        cout << "[" << clock() << "] Beshan is dog" << endl;
                         app.removeObject(get<0>(enemy));
                         VECTOR_REMOVE(enemies, enemyCounter);
                     }
@@ -134,8 +136,8 @@ int main () {
             }
             if (!wasCollided) {
                 float seconds = (clock() - time) / 1000;
-                projectile->x += seconds * SPEED * cos(RAD(rot));
-                projectile->y += seconds * SPEED * sin(RAD(rot));
+                projectile->texture_rectangle->x += seconds * SPEED * cos(RAD(rot));
+                projectile->texture_rectangle->y += seconds * SPEED * sin(RAD(rot));
                 ++counter;
                 wasCollided = false;
             }

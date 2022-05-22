@@ -1,7 +1,8 @@
 #include "BESDL.hpp"
 #include "Utils.hpp"
-#include <SDL_ttf.h>
+#include <SDL2/SDL_ttf.h>
 #include <map>
+
 App::App (string name, int width, int height) {
     this->window_width = width;
     this->window_height = height;
@@ -24,76 +25,30 @@ App::App (string name, int width, int height) {
 }
 
 // https://stackoverflow.com/questions/22886500/how-to-render-text-in-sdl2
-SDL_Rect* App::addText (string text, string ttf_path, int fontSize, Uint8 colorR, Uint8 colorG, Uint8 colorB) {
-    auto font = TTF_OpenFont(ttf_path.c_str(), fontSize); 
-    fonts.push_back(font);
-
-
-    SDL_Color color = {colorR, colorG, colorB};
-
-    auto surface = TTF_RenderText_Solid(font, text.c_str(), color);
-    texture_surfaces.push_back(surface);
-
-    auto texture = SDL_CreateTextureFromSurface(rend, surface);
-    textures.push_back(texture);
-
-    texture_rotation.push_back(0.0);
-    auto rect = new SDL_Rect[1];
-    texture_rectangles.push_back(rect);
-    return rect;
+ShapeObject *App::addText (string text, string ttf_path, int fontSize, Uint8 colorR, Uint8 colorG, Uint8 colorB) {
+    auto ret =  new ShapeObject(this->rend, text, ttf_path, fontSize, colorR, colorG, colorB);
+    this->objects.push_back(ret);
+    return ret;
 }
 
-SDL_Rect* App::addTexture (string path) {
+ShapeObject *App::addTexture (string path) {
     // creates a surface to load an image into the main memory
-    SDL_Surface* surface;
- 
-    // please provide a path for your image
-    surface = IMG_Load(path.c_str());
- 
-    // loads image to our graphics hardware memory.
-    SDL_Texture* tex = SDL_CreateTextureFromSurface(this->rend, surface);
-    // clears main-memory
-    SDL_FreeSurface(surface);
- 
-    // let us control our image position
-    // so that we can move it with our keyboard.
-    auto dest = new SDL_Rect[1];
-    
-    // connects our texture with dest to control position
-    SDL_QueryTexture(tex, NULL, NULL, &dest->w, &dest->h); // creates a surface to load an image into the main memory
-
-    this->texture_rectangles.push_back(dest);
-    this->texture_surfaces.push_back(surface);
-    this->textures.push_back(tex);
-    texture_rotation.push_back(0.0);
-    return dest;
+    auto ret = new ShapeObject(this->rend, path);
+    this->objects.push_back(ret);
+    return ret;
 }
 
-void App::removeObject (SDL_Rect *rect) {
+void App::removeObject (ShapeObject *object) {
     int i = 0;
-    for (auto object : this->texture_rectangles) {
-        if (rect == object) {
-            SDL_DestroyTexture(this->textures[i]);
-            VECTOR_REMOVE(this->textures, i);
-            SDL_FreeSurface(this->texture_surfaces[i]);
-            VECTOR_REMOVE(this->texture_surfaces, i);
-            VECTOR_REMOVE(this->texture_rectangles, i);
+    for (auto _object : this->objects) {
+        if (object == _object) {
+            delete object;
+            VECTOR_REMOVE(objects, i);
         }
         ++i;
     }
 }
 
-void App::setRotation(SDL_Rect *rect, double rotation) {
-    int counter = 0;
-    for (auto _rect: this->texture_rectangles) {
-        if (_rect == rect) {
-            this->texture_rotation[counter] = -rotation;
-            return;
-        }
-        ++counter;
-        
-    }
-}
 
 tuple<char, int, int, bool, bool> App::getInteraction () {
     char pressed_key;
@@ -121,23 +76,14 @@ tuple<char, int, int, bool, bool> App::getInteraction () {
 
 void App::render () {
     SDL_RenderClear(this->rend);
-    for (int i = 0; i < this->texture_rectangles.size(); i++) {
-        SDL_RenderCopyEx(this->rend, this->textures[i], NULL, this->texture_rectangles[i], texture_rotation[i], NULL, SDL_FLIP_NONE);    
+    for (auto object : objects) {
+        SDL_RenderCopyEx(rend, object->texture, NULL, object->texture_rectangle, object->rotation, NULL, SDL_FLIP_NONE);
     }
     SDL_RenderPresent(this->rend);
     SDL_Delay(1000 / (float)60);
 }
 
 App::~App() {
-    for (auto texture : this->textures) {
-        SDL_DestroyTexture(texture);
-    }
-    for (auto surface : this->texture_surfaces) {
-        SDL_FreeSurface(surface);
-    }
-    for (auto font: fonts) {
-        TTF_CloseFont(font);
-    }
  
     // destroy renderer
     SDL_DestroyRenderer(rend);
@@ -150,3 +96,51 @@ App::~App() {
     SDL_Quit();
 }
 
+ShapeObject::ShapeObject(SDL_Renderer *rend, string path) {
+    // creates a surface to load an image into the main memory
+    SDL_Surface* surface;
+ 
+    // please provide a path for your image
+    surface = IMG_Load(path.c_str());
+ 
+    // loads image to our graphics hardware memory.
+    SDL_Texture* tex = SDL_CreateTextureFromSurface(this->rend, surface);
+    // clears main-memory
+    SDL_FreeSurface(surface);
+ 
+    // let us control our image position
+    // so that we can move it with our keyboard.
+    auto dest = new SDL_Rect[1];
+    
+    // connects our texture with dest to control position
+    SDL_QueryTexture(tex, NULL, NULL, &dest->w, &dest->h); // creates a surface to load an image into the main memory
+
+    texture_rectangle = dest;
+    texture_surface = surface;
+    texture = tex;
+    rotation = 0.0;
+    this->rend = rend;
+}
+
+ShapeObject::ShapeObject(SDL_Renderer *rend, string text, string ttf_path, int fontSize, Uint8 colorR, Uint8 colorG, Uint8 colorB) {
+    auto font = TTF_OpenFont(ttf_path.c_str(), fontSize); 
+    this->font = font;
+
+
+    SDL_Color color = {colorR, colorG, colorB};
+
+    auto surface = TTF_RenderText_Solid(font, text.c_str(), color);
+    texture_surface = surface;
+
+    auto texture = SDL_CreateTextureFromSurface(rend, surface);
+    this->texture = texture;
+
+    rotation = 0.0;
+    texture_rectangle = new SDL_Rect[1];
+}
+
+ShapeObject::~ShapeObject() {
+    SDL_DestroyTexture(texture);
+    SDL_FreeSurface(texture_surface);
+    if (font != NULL) TTF_CloseFont(font);
+}

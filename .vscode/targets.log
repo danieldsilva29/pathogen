@@ -6,11 +6,13 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # PARTICULAR PURPOSE.
 
 # This program built for i386-apple-darwin11.3.0
+ 
 
-# Make data base, printed on Sat May 21 20:16:56 2022
+# Make data base, printed on Sat May 21 22:17:30 2022
 
 # Variables
 
+ 
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # automatic
@@ -24,7 +26,7 @@ VSCODE_LOG_NATIVE = false
 # automatic
 @F = $(notdir $@)
 # makefile
-CURDIR := /Users/danieldsilva/pathogen
+CURDIR := /Users/dandy/pathogen
 # makefile
 SHELL = /bin/sh
 # environment
@@ -36,15 +38,11 @@ MAKEFILE_LIST :=  Makefile
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-__CFBundleIdentifier = com.microsoft.VSCode
-# environment
-INFOPATH = /opt/homebrew/share/info:
-# environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/5j/hhf9wgf961n70ptv993744740000gp/T/vscode-ipc-e6b8c476-5b98-4c34-aa05-f8d2a2dbe85d.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/_n/wsm8lpg93fl_tqgbb3pd6r5r0000gp/T/vscode-ipc-319b7282-c319-42c1-a6e3-26f5ca771bbb.sock
 # environment
 VSCODE_CWD = /
 # environment
-PATH = /opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Applications/Wireshark.app/Contents/MacOS:/Users/danieldsilva/.cargo/bin
+PATH = /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/Users/dandy/.cargo/bin
 # environment
 VSCODE_LOG_STACK = false
 # environment
@@ -52,29 +50,25 @@ ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.EacNPQ2jL3/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.PsplnBOju0/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
 VSCODE_PIPE_LOGGING = true
 # environment
-PWD = /Users/danieldsilva/pathogen
-# environment
-HOMEBREW_CELLAR = /opt/homebrew/Cellar
+PWD = /Users/dandy/pathogen
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = undefined
 # environment
-MANPATH = /opt/homebrew/share/man::
-# environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
-HOME = /Users/danieldsilva
+HOME = /Users/dandy
 # default
-MAKEFILEPATH := /Applications/Xcode.app/Contents/Developer/Makefiles
+MAKEFILEPATH = $(shell /usr/bin/xcode-select -print-path 2>/dev/null || echo /Developer)/Makefiles
 # environment
-VSCODE_CODE_CACHE_PATH = /Users/danieldsilva/Library/Application Support/Code/CachedData/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5
+VSCODE_CODE_CACHE_PATH = /Users/dandy/Library/Application Support/Code/CachedData/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5
 # environment
-LOGNAME = danieldsilva
+LOGNAME = dandy
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
@@ -92,21 +86,21 @@ SHLVL = 1
 # default
 MAKE_VERSION := 3.81
 # environment
-USER = danieldsilva
+USER = dandy
 # makefile
 .DEFAULT_GOAL := all
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # default
-MAKE_COMMAND := /Applications/Xcode.app/Contents/Developer/usr/bin/make
+MAKE_COMMAND := /Library/Developer/CommandLineTools/usr/bin/make
 # default
 .VARIABLES := 
 # environment
-TMPDIR = /var/folders/5j/hhf9wgf961n70ptv993744740000gp/T/
+TMPDIR = /var/folders/_n/wsm8lpg93fl_tqgbb3pd6r5r0000gp/T/
 # automatic
 *F = $(notdir $*)
 # environment
-VSCODE_IPC_HOOK = /Users/danieldsilva/Library/Application Support/Code/1.67.2-main.sock
+VSCODE_IPC_HOOK = /Users/dandy/Library/Application Support/Code/1.67.2-main.sock
 # makefile
 MAKEFLAGS = Rrqp
 # environment
@@ -114,19 +108,13 @@ MFLAGS = -Rrqp
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
-XPC_SERVICE_NAME = application.com.microsoft.VSCode.14537995.14538018
-# environment
-HOMEBREW_PREFIX = /opt/homebrew
+XPC_SERVICE_NAME = com.microsoft.VSCode.17916
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
 +F = $(notdir $+)
 # environment
-HOMEBREW_REPOSITORY = /opt/homebrew
-# environment
 __CF_USER_TEXT_ENCODING = 0x1F6:0x0:0x0
-# environment
-COMMAND_MODE = unix2003
 # default
 MAKEFILES := 
 # automatic
@@ -137,14 +125,16 @@ LC_ALL = C
 ^F = $(notdir $^)
 # default
 SUFFIXES := 
+# default
+.INCLUDE_DIRS = /usr/local/include
 # environment
 MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 99905
+VSCODE_PID = 93363
 # variable set hash-table stats:
-# Load=66/1024=6%, Rehash=0, Collisions=1/91=1%
+# Load=60/1024=6%, Rehash=0, Collisions=1/86=1%
 
 # Pattern-specific Variable Values
 
@@ -152,9 +142,9 @@ VSCODE_PID = 99905
 
 # Directories
 
-# . (device 16777233, inode 16031045): 22 files, no impossibilities.
+# . (device 16777221, inode 31436164): 20 files, no impossibilities.
 
-# 22 files, no impossibilities in 1 directories.
+# 20 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -189,7 +179,7 @@ all:
 # Load=8/32=25%, Rehash=0, Collisions=1/10=10%
 #  commands to execute (from `Makefile', line 2):
 	@echo "Compiling"
-	@c++ -std=c++17 BESDL.cpp gameMain.cpp -I /usr/include/SDL2 -I . -lSDL2 -lSDL2_image -lSDL2_ttf -o main -g
+	@c++ -std=c++17 BESDL.cpp gameMain.cpp -I /usr/local/Cellar/sdl2/2.0.22/include -I . -lSDL2 -lSDL2_image -lSDL2_ttf -o main -g
 	@./main
 	@rm main
 	
@@ -203,7 +193,7 @@ all:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-21 20:16:43
+#  Last modified 2022-05-21 22:17:30
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -221,7 +211,7 @@ beshan:
 #  File has not been updated.
 #  commands to execute (from `Makefile', line 8):
 	@echo "Compiling"
-	@c++ -std=c++17 BESDL.cpp test/main.cpp -I /usr/include/SDL2 -I . -lSDL2 -lSDL2_image -lSDL2_ttf -o main
+	@c++ -std=c++17 BESDL.cpp test/main.cpp -I /usr/local/Cellar/sdl2/2.0.22/include -I . -lSDL2 -lSDL2_image -lSDL2_ttf -o main
 	@./main
 	@rm main
 	
@@ -239,6 +229,6 @@ beshan:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Sat May 21 20:16:56 2022
+# Finished Make data base on Sat May 21 22:17:30 2022
 
  
