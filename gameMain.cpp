@@ -17,6 +17,7 @@ vector<tuple<shared_ptr<ShapeObject>, bool, float>> activeProjectiles;
 
 void shootStuff(App *app, tuple<int, int, int, int> shooter, float rotation, bool isPlayer = false) {
     auto newProjectile = isPlayer ? app->addTexture("bluelaser.png"): app->addTexture("redlaser.png");
+    newProjectile->nothing();
     newProjectile->rotation = 270-rotation;
     newProjectile->setCoords(get<0>(shooter) + get<2>(shooter), get<1>(shooter) + get<3>(shooter));
     activeProjectiles.push_back({newProjectile, isPlayer, rotation});
@@ -34,6 +35,7 @@ void spawnEnemy(App *app,vector<tuple<shared_ptr<ShapeObject>, int>>& enemies) {
     y = (app->window_height / 2) + range * y;
 
     auto enemy = app->addTexture("enemyship1.png");
+    enemy->nothing();
     enemies.push_back({enemy, MAXHEALTH});
     enemy->rotation = 90 - direction;
 
@@ -66,6 +68,7 @@ int main () {
         y = (app.window_height / 2) + range * y;
 
         auto enemy = app.addTexture("enemyship1.png");
+        enemy->nothing();
         enemies.push_back({enemy, MAXHEALTH});
         enemy->rotation = 90 - direction;
 
@@ -76,6 +79,7 @@ int main () {
     //create player texture
     int velocity_player = 0;
     auto player = app.addTexture("spaceship.png");
+    player->nothing();
     player->setCoords(500, 500, 100, 200);
     
     bool close = false;
@@ -102,15 +106,21 @@ int main () {
             rectangle->rotation = 270 - rotation;
             
             // cout << "Player X:" << player->x + player->w / 2 << " Player X: " << player->y + player->h / 2 << " Rotation: " << rotation << endl;
-
             // enemy move towards player
             rectangle->getCoords(COORD_X) += 2 * cos(RAD(rotation));
             rectangle->getCoords(COORD_Y) += 2 * sin(RAD(rotation));
 
             if (rectangle->hasIntersection(player)) {
-                enemies = {};
-                activeProjectiles = {};
-                gameOverText = app.addText("GAME OVER", "./font.ttf", 50, 255, 255, 255);
+                /*
+                for (auto enemy : enemies) {
+                    // deallocate shared pointer
+                    auto shared_pointer = get<0>(enemy);
+                    shared_pointer.reset();
+                }
+                */
+                enemies.clear();
+                activeProjectiles.clear();
+                //gameOverText = app.addText("GAME OVER", "./font.ttf", 50, 255, 255, 255);
             }
         }
     

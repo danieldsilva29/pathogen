@@ -33,7 +33,9 @@ shared_ptr<ShapeObject> App::addText (string text, string ttf_path, int fontSize
 
 shared_ptr<ShapeObject> App::addTexture(string path) {
     // creates a surface to load an image into the main memory
-    auto ret = make_shared<ShapeObject>(new ShapeObject(this->rend, path));
+    cout << "Renderer: " << this->rend << endl;
+    shared_ptr<ShapeObject> ret = make_shared<ShapeObject>(new ShapeObject(this->rend, path));
+    ret->nothing();
     this->objects.push_back(ret);
     return ret;
 }
@@ -68,10 +70,22 @@ tuple<char, int, int, bool, bool> App::getInteraction () {
     return {pressed_key, mouseX, mouseY, did_click, should_close};
 }
 
+void ShapeObject::print () {
+    cout << "----------------------------------------" << endl;
+    cout << "Render Pointer pointer: " << rend << endl;
+    cout << "Texture Pointer pointer: " << texture << endl;
+    cout << "Texture Rectangle pointer: " << texture_rectangle << endl;
+    cout << "Texture surface pointer: " << texture_surface << endl;
+      
+}
+
 void App::render() {
     SDL_RenderClear(this->rend);
     int counter = 0;
-    for (auto object : objects) {
+    for (int i = 0; i < objects.size(); i++) {
+        cout << "i: " << i << endl;
+        auto object = objects[i]; 
+        cout << "object of I: " << object << endl;
         if (auto tmp = object.lock()) {
             SDL_RenderCopyEx(rend, tmp->texture, NULL, tmp->texture_rectangle, tmp->rotation, NULL, SDL_FLIP_NONE);
             ++counter;
@@ -97,16 +111,14 @@ App::~App() {
 }
 
 ShapeObject::ShapeObject(SDL_Renderer *rend, string path) {
-    // creates a surface to load an image into the main memory
-    SDL_Surface* surface;
  
     // please provide a path for your image
-    surface = IMG_Load(path.c_str());
+    this->texture_surface = IMG_Load(path.c_str());
  
     // loads image to our graphics hardware memory.
-    SDL_Texture* tex = SDL_CreateTextureFromSurface(this->rend, surface);
+    SDL_Texture* tex = SDL_CreateTextureFromSurface(this->rend, this->texture_surface);
     // clears main-memory
-    SDL_FreeSurface(surface);
+    //SDL_FreeSurface(surface);
  
     // let us control our image position
     // so that we can move it with our keyboard.
@@ -115,7 +127,6 @@ ShapeObject::ShapeObject(SDL_Renderer *rend, string path) {
     // connects our texture with dest to control position
     SDL_QueryTexture(tex, NULL, NULL, &this->texture_rectangle->w, &this->texture_rectangle->h); // creates a surface to load an image into the main memory
 
-    texture_surface = surface;
     texture = tex;
     rotation = 0.0;
     this->rend = rend;
@@ -138,8 +149,6 @@ ShapeObject::ShapeObject(SDL_Renderer *rend, string text, string ttf_path, int f
 }
 
 ShapeObject::~ShapeObject() {
-    cout << "Object getting destroyed";
-    SDL_FreeSurface(texture_surface);
     SDL_DestroyTexture(texture);
     if (font != NULL) TTF_CloseFont(font);
 }
