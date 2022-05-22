@@ -1,6 +1,8 @@
 #include "BESDL.hpp"
 #include <cstdio>
 #include <ctime>
+#include <vector>
+using namespace std;
 
 #define SPEED 100 //Speed of projectiles per second
 #define DAMAGE 10 //Damage per projectile hit
@@ -9,8 +11,8 @@
 #define DEG(x) x*(180/M_PI)
 #define RAD(x) (x/(float)180)*(float)M_PI
 #define TODO(x) cout << "Task for Beshan the dog: " << x << endl
-#define VECTOR_REMOVE(vec, index) erase(vec.begin(), vec.begin()+index)
-typedef vector<SDL_Rect*> ObjectList;
+#define VECTOR_REMOVE(vec, index) vec.erase(vec.begin()+index)
+
 float xatan (float y, float x) {
     float degrees = DEG(atan2(y, x)); 
     if (degrees < 0) {
@@ -19,7 +21,6 @@ float xatan (float y, float x) {
     return degrees;
 }
 
-using namespace std;
 int main () {
     // 1000 by 1000 window
     App app = App("Pathogen?????");
@@ -114,7 +115,7 @@ int main () {
                 wasCollided = false;
             }
         }
-        old = clock();
+        time = clock();
         app.render();
 
     }
